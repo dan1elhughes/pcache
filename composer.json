@@ -1,0 +1,22 @@
+{
+	"name": "xes/pcache",
+	"type": "library",
+	"description": "Wrapper for Predis to add GetOrSet",
+	"homepage": "https://github.com/dan1elhughes/pcache",
+	"authors": [
+		{
+			"name": "Dan Hughes",
+			"email": "dh@xes.io",
+			"homepage": "https://xes.io",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"predis/predis": "~1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"xes\\": "src/"
+		}
+	}
+}
