@@ -1,9 +1,16 @@
 <?php
 class Pcache {
 	private $predis;
+	private static $times;
 
 	public function __construct(\Predis\Client $predis) {
 		$this->predis = $predis;
+
+		self::$times = [
+			'short' => 0.5*60,
+			'default' => 1*60,
+			'long' => 5*60,
+		];
 	}
 
 	public function get($name, $expiry, callable $callback) {
@@ -15,14 +22,16 @@ class Pcache {
 		return $this->predis->get($name);
 	}
 
-	public static function expire($length) {
-		$mins = 60;
-		switch($length) {
-			case 'short': return 0.5*$mins;
-			case 'default': return 1*$mins;
-			case 'long': return 5*$mins;
-			default: throw new Exception("Invalid expiry: $length");
+	public static function setTimes($times) {
+		self::$times = $times;
+	}
+
+	public static function expire($lengthName) {
+		foreach(self::$times as $name => $mins) {
+			if ($lengthName == $name) { return $mins; }
 		}
+		throw new Exception("Invalid expiry: $length");
+
 	}
 }
 ?>
