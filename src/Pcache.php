@@ -1,4 +1,4 @@
-<?php
+<?php namespace xes;
 class Pcache {
 	private $predis;
 	private static $times;
