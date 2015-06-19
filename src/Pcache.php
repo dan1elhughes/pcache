@@ -14,7 +14,7 @@ class Pcache {
 	}
 
 	public function get($name, $expiry, callable $callback) {
-		if (!$this->enabled) {
+		if (!$this->enabled or ($expiry == 0)) {
 			return $callback();
 		}
 
