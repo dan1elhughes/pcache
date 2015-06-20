@@ -31,11 +31,15 @@ class Pcache {
 	}
 
 	public function clear() {
+		$prefix = $this->predis->getOptions()->prefix->getPrefix();
+		$prefixLength = strlen($prefix);
 		$count = 0;
-		foreach ($this->predis->keys('*') as $key) {
-			$this->predis->del($key);
-			$count++;
+
+		foreach ($this->predis->keys('*') as $prefixedKey) {
+			$key = substr($prefixedKey, $prefixLength);
+			$count += $this->predis->del($key);
 		}
+
 		return $count;
 	}
 
