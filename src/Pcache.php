@@ -26,6 +26,10 @@ class Pcache {
 		return $this->predis->get($name);
 	}
 
+	public function getClient() {
+		return $this->predis;
+	}
+
 	private function randomise($time) {
 		return $time + (mt_rand(-$time/10, $time/10));
 	}
