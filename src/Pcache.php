@@ -30,6 +30,15 @@ class Pcache {
 		return $this->predis;
 	}
 
+	public function clear() {
+		$count = 0;
+		foreach ($this->predis->keys('*') as $key) {
+			$this->predis->del($key);
+			$count++;
+		}
+		return $count;
+	}
+
 	private function randomise($time) {
 		return $time + (mt_rand(-$time/10, $time/10));
 	}
